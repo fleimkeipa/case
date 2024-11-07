@@ -38,9 +38,9 @@ func serveApplication() {
 	sugar := configureLogger(e)
 	defer sugar.Sync() // Clean up logger at the end
 
-	// Initialize PostgreSQL client
-	dbClient := initDB()
-	defer dbClient.Close() // Clean up db connections at the end
+	// // Initialize PostgreSQL client
+	// dbClient := initDB()
+	// defer dbClient.Close() // Clean up db connections at the end
 
 	httpClient := pkg.NewHTTPClient(os.Getenv("API_KEY"), os.Getenv("API_SECRET"))
 
