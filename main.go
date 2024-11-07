@@ -22,6 +22,9 @@ func main() {
 }
 
 func serveApplication() {
+	// init config
+	loadConfig()
+
 	// Create a new Echo instance
 	e := echo.New()
 
@@ -52,9 +55,9 @@ func serveApplication() {
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
-func configureConfig() {
+func loadConfig() {
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatalf("Error loading .env file: %v", err)
 	}
 }
 

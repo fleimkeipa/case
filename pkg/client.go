@@ -67,7 +67,9 @@ func (rc *Client) Do(req model.Request, resp interface{}) error {
 			return err
 		}
 
-		if err := json.Unmarshal(respBody, resp); err != nil {
+		decoder := json.NewDecoder(bytes.NewBuffer(respBody))
+
+		if err := decoder.Decode(resp); err != nil {
 			return err
 		}
 	}
