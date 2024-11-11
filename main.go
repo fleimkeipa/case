@@ -38,15 +38,19 @@ func serveApplication() {
 	sugar := configureLogger(e)
 	defer sugar.Sync() // Clean up logger at the end
 
-	// // Initialize PostgreSQL client
-	// dbClient := initDB()
-	// defer dbClient.Close() // Clean up db connections at the end
+	// Initialize PostgreSQL client
+	dbClient := initDB()
+	defer dbClient.Close() // Clean up db connections at the end
 
 	httpClient := pkg.NewHTTPClient(os.Getenv("API_KEY"), os.Getenv("API_SECRET"))
 
-	productRepo := repositories.NewDeploymentRepository(httpClient)
-	productUC := uc.NewProductUC(productRepo)
-	productController := controller.NewProductController(productUC)
+	productDBRepo := repositories.NewProductDBRepository(dbClient)
+	productDBUC := uc.NewProductDBUC(productDBRepo)
+
+	productAPIRepo := repositories.NewProductAPIRepository(httpClient)
+	productAPIUC := uc.NewProductAPIUC(productAPIRepo, *productDBUC)
+
+	productController := controller.NewProductController(productAPIUC)
 
 	// Register routes
 	e.GET("/products", productController.FindAll)

@@ -35,54 +35,9 @@ type (
 )
 
 type ProductsResponse struct {
-	Page          int `json:"page"`
-	Size          int `json:"size"`
-	TotalElements int `json:"totalElements"`
-	TotalPages    int `json:"totalPages"`
-	Content       []struct {
-		Approved   bool `json:"approved"`
-		Archived   bool `json:"archived"`
-		Attributes []struct {
-			AttributeID      int    `json:"attributeId"`
-			AttributeName    string `json:"attributeName"`
-			AttributeValue   string `json:"attributeValue"`
-			AttributeValueID int    `json:"attributeValueId"`
-		} `json:"attributes"`
-		Barcode           string `json:"barcode"`
-		Brand             string `json:"brand"`
-		BrandID           int    `json:"brandId"`
-		CategoryName      string `json:"categoryName"`
-		CreateDateTime    int64  `json:"createDateTime"`
-		Description       string `json:"description"`
-		DimensionalWeight int    `json:"dimensionalWeight"`
-		HasActiveCampaign bool   `json:"hasActiveCampaign"`
-		ID                string `json:"id"`
-		Images            []struct {
-			URL string `json:"url"`
-		} `json:"images"`
-		LastUpdateDate      int64         `json:"lastUpdateDate"`
-		ListPrice           float64       `json:"listPrice"`
-		Locked              bool          `json:"locked"`
-		OnSale              bool          `json:"onSale"`
-		PimCategoryID       int           `json:"pimCategoryId"`
-		PlatformListingID   string        `json:"platformListingId"`
-		ProductCode         int           `json:"productCode"`
-		ProductContentID    int           `json:"productContentId"`
-		ProductMainID       string        `json:"productMainId"`
-		Quantity            int           `json:"quantity"`
-		SalePrice           float64       `json:"salePrice"`
-		StockCode           string        `json:"stockCode"`
-		StockUnitType       string        `json:"stockUnitType"`
-		SupplierID          int           `json:"supplierId"`
-		Title               string        `json:"title"`
-		VatRate             int           `json:"vatRate"`
-		Rejected            bool          `json:"rejected"`
-		RejectReasonDetails []interface{} `json:"rejectReasonDetails"`
-		Blacklisted         bool          `json:"blacklisted"`
-		HasHTMLContent      bool          `json:"hasHtmlContent"`
-		ProductURL          string        `json:"productUrl"`
-		LockReason          string        `json:"lockReason,omitempty"`
-		BlacklistReason     string        `json:"blacklistReason,omitempty"`
-		DeliveryDuration    int           `json:"deliveryDuration,omitempty"`
-	} `json:"content"`
+	Page          int       `json:"page"`
+	Size          int       `json:"size"`
+	TotalElements int       `json:"totalElements"`
+	TotalPages    int       `json:"totalPages"`
+	Content       []Product `json:"content"`
 }

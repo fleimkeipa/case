@@ -9,10 +9,10 @@ import (
 )
 
 type ProductController struct {
-	ProductUC *uc.ProductUC
+	ProductUC *uc.ProductAPIUC
 }
 
-func NewProductController(productUC *uc.ProductUC) *ProductController {
+func NewProductController(productUC *uc.ProductAPIUC) *ProductController {
 	return &ProductController{ProductUC: productUC}
 }
 

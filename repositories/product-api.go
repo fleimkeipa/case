@@ -7,17 +7,17 @@ import (
 	"github.com/fleimkeipa/case/pkg"
 )
 
-type ProductRepository struct {
+type ProductAPIRepository struct {
 	Client pkg.Client
 }
 
-func NewDeploymentRepository(client pkg.Client) *ProductRepository {
-	return &ProductRepository{
+func NewProductAPIRepository(client pkg.Client) *ProductAPIRepository {
+	return &ProductAPIRepository{
 		Client: client,
 	}
 }
 
-func (rc *ProductRepository) FindAll(suplierID string) (*model.ProductsResponse, error) {
+func (rc *ProductAPIRepository) FindAll(suplierID string) (*model.ProductsResponse, error) {
 	request := model.Request{
 		Method:  http.MethodGet,
 		Paths:   []string{"suppliers", suplierID, "products"},
@@ -32,6 +32,6 @@ func (rc *ProductRepository) FindAll(suplierID string) (*model.ProductsResponse,
 	return &products, nil
 }
 
-func (rc *ProductRepository) FindOne(id string) (*model.Product, error) {
+func (rc *ProductAPIRepository) FindOne(id string) (*model.Product, error) {
 	return nil, nil
 }
