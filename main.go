@@ -49,7 +49,8 @@ func serveApplication() {
 	// Initialize HTTP client
 	httpClient := pkg.NewHTTPClient(os.Getenv("API_KEY"), os.Getenv("API_SECRET"))
 
-	productCacheUC := uc.NewProductCacheUC(*redisClient)
+	productCacheRepo := repositories.NewCacheRepository(redisClient)
+	productCacheUC := uc.NewProductCacheUC(productCacheRepo)
 
 	productDBRepo := repositories.NewProductDBRepository(dbClient)
 	productDBUC := uc.NewProductDBUC(productDBRepo, productCacheUC)
