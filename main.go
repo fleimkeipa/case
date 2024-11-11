@@ -13,6 +13,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
 
@@ -42,10 +43,16 @@ func serveApplication() {
 	dbClient := initDB()
 	defer dbClient.Close() // Clean up db connections at the end
 
+	// Initialize Redis client
+	redisClient := initCache()
+
+	// Initialize HTTP client
 	httpClient := pkg.NewHTTPClient(os.Getenv("API_KEY"), os.Getenv("API_SECRET"))
 
+	productCacheUC := uc.NewProductCacheUC(*redisClient)
+
 	productDBRepo := repositories.NewProductDBRepository(dbClient)
-	productDBUC := uc.NewProductDBUC(productDBRepo)
+	productDBUC := uc.NewProductDBUC(productDBRepo, productCacheUC)
 
 	productAPIRepo := repositories.NewProductAPIRepository(httpClient)
 	productAPIUC := uc.NewProductAPIUC(productAPIRepo, *productDBUC)
@@ -110,4 +117,15 @@ func initDB() *pg.DB {
 
 	log.Println("PostgreSQL client initialized successfully")
 	return db
+}
+
+// Initializes the Cache client
+func initCache() *redis.Client {
+	cache := pkg.NewRedisClient()
+	if cache == nil {
+		log.Fatal("Failed to initialize Cache client")
+	}
+
+	log.Println("Cache client initialized successfully")
+	return cache
 }
