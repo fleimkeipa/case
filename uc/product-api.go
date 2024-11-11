@@ -1,6 +1,8 @@
 package uc
 
 import (
+	"context"
+
 	"github.com/fleimkeipa/case/model"
 	"github.com/fleimkeipa/case/repositories/interfaces"
 )
@@ -17,20 +19,20 @@ func NewProductAPIUC(api interfaces.ProductAPIRepository, db ProductDBUC) *Produ
 	}
 }
 
-func (rc *ProductAPIUC) FindAll(suplierID string) (*model.ProductsResponse, error) {
+func (rc *ProductAPIUC) FindAll(ctx context.Context, suplierID string) (*model.ProductsResponse, error) {
 	res, err := rc.api.FindAll(suplierID)
 	if err != nil {
 		return nil, err
 	}
 
-	go func(products *model.ProductsResponse) {
+	go func(ctx context.Context, products *model.ProductsResponse) {
 		for _, product := range products.Content {
-			_, err := rc.db.Create(&product)
+			_, err := rc.db.Create(ctx, &product)
 			if err != nil {
 				panic(err)
 			}
 		}
-	}(res)
+	}(ctx, res)
 
 	return res, nil
 }
