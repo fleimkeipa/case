@@ -19,7 +19,7 @@ func NewProductController(productUC *uc.ProductAPIUC) *ProductController {
 func (rc *ProductController) FindAll(c echo.Context) error {
 	suplierID := c.QueryParam("suplier_id")
 
-	list, err := rc.ProductUC.FindAll(suplierID)
+	list, err := rc.ProductUC.FindAll(c.Request().Context(), suplierID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, FailureResponse{
 			Error:   fmt.Sprintf("Failed to list products: %v", err),
