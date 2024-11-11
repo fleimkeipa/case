@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/redis/go-redis/v9"
@@ -18,8 +17,4 @@ func NewRedisClient() *redis.Client {
 	}
 
 	return redisClient
-}
-
-func ProductCacheID(brandID int, barcode string) string {
-	return fmt.Sprintf("product:%d:%v", brandID, barcode)
 }
