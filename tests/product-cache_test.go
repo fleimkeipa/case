@@ -67,7 +67,8 @@ func TestProductCacheUC_IsExist(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			for _, tempData := range tt.tempDatas {
-				addTestCacheData(tt.args.ctx, uc.ProductCacheID(tempData.brandID, tempData.barcode), tempData.barcode)
+				cacheID := uc.ProductCacheID(tempData.brandID, tempData.barcode)
+				addTestCacheData(tt.args.ctx, cacheID, tempData.barcode)
 			}
 			rc := uc.NewProductCacheUC(tt.fields.repo)
 			if got := rc.IsExist(tt.args.ctx, tt.args.brandID, tt.args.barcode); got != tt.want {
