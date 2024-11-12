@@ -2,9 +2,12 @@ package repositories
 
 import (
 	"context"
+	"time"
 
 	"github.com/redis/go-redis/v9"
 )
+
+const expireTime = 24 * time.Hour
 
 type CacheRepository struct {
 	Client *redis.Client
@@ -17,7 +20,7 @@ func NewCacheRepository(client *redis.Client) *CacheRepository {
 }
 
 func (rc *CacheRepository) Set(ctx context.Context, key string, value string) error {
-	return rc.Client.Set(ctx, key, value, 0).Err()
+	return rc.Client.Set(ctx, key, value, expireTime).Err()
 }
 
 func (rc *CacheRepository) Get(ctx context.Context, key string) (string, error) {
