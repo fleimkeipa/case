@@ -19,12 +19,13 @@ func NewProductCacheUC(repo interfaces.CacheRepository) *ProductCacheUC {
 
 func (rc *ProductCacheUC) IsExist(ctx context.Context, brandID int, barcode string) bool {
 	cacheID := ProductCacheID(brandID, barcode)
-	res, err := rc.repo.Exists(ctx, cacheID)
+
+	count, err := rc.repo.Exists(ctx, cacheID)
 	if err != nil {
 		return false
 	}
 
-	if res > 0 {
+	if count > 0 {
 		return true
 	}
 
