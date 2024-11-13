@@ -28,7 +28,7 @@ func NewHTTPClient(apiKey, apiSecret string) Client {
 	}
 }
 
-func (rc *Client) Do(req model.Request, resp interface{}) error {
+func (rc *Client) Do(req model.InternalRequest, resp interface{}) error {
 	parsedURL, err := parseURL(req)
 	if err != nil {
 		return err
@@ -83,7 +83,7 @@ func basicAuth(username, password string) string {
 	return fmt.Sprintf("Basic %s", encoded)
 }
 
-func parseURL(req model.Request) (*url.URL, error) {
+func parseURL(req model.InternalRequest) (*url.URL, error) {
 	joinedURL, err := url.JoinPath(BaseURL, req.Paths...)
 	if err != nil {
 		return nil, err

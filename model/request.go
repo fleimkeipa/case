@@ -1,6 +1,6 @@
 package model
 
-type Request struct {
+type InternalRequest struct {
 	Page    int
 	Size    int
 	Method  string

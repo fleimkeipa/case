@@ -17,10 +17,10 @@ func NewProductAPIRepository(client pkg.Client) *ProductAPIRepository {
 	}
 }
 
-func (rc *ProductAPIRepository) FindAll(suplierID string) (*model.ProductsResponse, error) {
-	request := model.Request{
+func (rc *ProductAPIRepository) FindAll(opts model.ProductListOpts) (*model.ProductsResponse, error) {
+	request := model.InternalRequest{
 		Method:  http.MethodGet,
-		Paths:   []string{"suppliers", suplierID, "products"},
+		Paths:   []string{"suppliers", opts.SuplierID.Value, "products"},
 		Headers: map[string]string{"Content-Type": "application/json"},
 	}
 
