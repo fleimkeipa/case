@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/redis/go-redis/v9"
@@ -12,8 +13,13 @@ import (
 )
 
 func NewRedisClient() *redis.Client {
+	addr := "localhost:6379"
+	if stage := os.Getenv("STAGE"); stage == "prod" {
+		addr = "redis:6379"
+	}
+
 	redisClient := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
+		Addr: addr,
 	})
 
 	if err := redisClient.Ping(context.Background()).Err(); err != nil {
@@ -51,7 +57,7 @@ func GetCacheTestInstance(ctx context.Context) (*redis.Client, func()) {
 	after, _ := strings.CutPrefix(containerPort.Port(), "/")
 
 	opts := redis.Options{
-		Addr: fmt.Sprintf("localhost:%s", after),
+		Addr: fmt.Sprintf("redis:%s", after),
 	}
 	redisClient := redis.NewClient(&opts)
 

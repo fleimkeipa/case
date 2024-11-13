@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/fleimkeipa/case/model"
 
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
-	"github.com/spf13/viper"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
@@ -18,12 +18,12 @@ import (
 func NewPSQLClient() *pg.DB {
 	// Determine if we are on local or cluster
 	addr := "localhost:5432"
-	if stage := viper.GetString("stage"); stage == "prod" {
-		addr = "postgres-service:5432"
+	if stage := os.Getenv("STAGE"); stage == "prod" {
+		addr = "postgres:5432"
 	}
 
 	opts := pg.Options{
-		Database: "kubernetes-api",
+		Database: "case",
 		User:     "postgres",
 		Password: "password",
 		Addr:     addr,
@@ -57,11 +57,11 @@ func createSchema(db *pg.DB) error {
 
 // GetTestInstance starts a PostgreSQL container for testing and returns a connected pg.DB client along with a cleanup function.
 func GetTestInstance(ctx context.Context) (*pg.DB, func()) {
-	const mongoVersion = "17.0"
+	const psqlVersion = "17.0"
 	const port = "5432"
 
 	req := testcontainers.ContainerRequest{
-		Image:        fmt.Sprintf("postgres:%s", mongoVersion),
+		Image:        fmt.Sprintf("postgres:%s", psqlVersion),
 		ExposedPorts: []string{fmt.Sprintf("%s/tcp", port)},
 		WaitingFor:   wait.ForListeningPort(port), // Wait until the port is ready
 		Env: map[string]string{
