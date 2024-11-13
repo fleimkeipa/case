@@ -3,6 +3,6 @@ package interfaces
 import "github.com/fleimkeipa/case/model"
 
 type ProductAPIRepository interface {
-	FindAll(suplierID string) (*model.ProductsResponse, error)
+	FindAll(opts model.ProductListOpts) (*model.ProductsResponse, error)
 	FindOne(id string) (*model.Product, error)
 }

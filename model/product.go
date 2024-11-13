@@ -41,3 +41,8 @@ type ProductsResponse struct {
 	TotalPages    int       `json:"totalPages"`
 	Content       []Product `json:"content"`
 }
+
+type ProductListOpts struct {
+	PaginationOpts PaginationOpts
+	SuplierID      Filter
+}

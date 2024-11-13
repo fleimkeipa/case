@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/fleimkeipa/case/model"
 	"github.com/fleimkeipa/case/uc"
+
 	"github.com/labstack/echo/v4"
 )
 
@@ -17,9 +19,9 @@ func NewProductController(productUC *uc.ProductAPIUC) *ProductController {
 }
 
 func (rc *ProductController) FindAll(c echo.Context) error {
-	suplierID := c.QueryParam("suplier_id")
+	opts := rc.getProductsFindOpts(c)
 
-	list, err := rc.ProductUC.FindAll(c.Request().Context(), suplierID)
+	list, err := rc.ProductUC.FindAll(c.Request().Context(), opts)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, FailureResponse{
 			Error:   fmt.Sprintf("Failed to list products: %v", err),
@@ -48,4 +50,11 @@ func (rc *ProductController) FindOne(c echo.Context) error {
 		Data:    product,
 		Message: "Product retrieved successfully.",
 	})
+}
+
+func (rc *ProductController) getProductsFindOpts(c echo.Context) model.ProductListOpts {
+	return model.ProductListOpts{
+		PaginationOpts: getPagination(c),
+		SuplierID:      getFilter(c, "suplier_id"),
+	}
 }

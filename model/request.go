@@ -8,3 +8,13 @@ type Request struct {
 	Headers map[string]string
 	Body    interface{}
 }
+
+type PaginationOpts struct {
+	Page int `json:"page"`
+	Size int `json:"size"`
+}
+
+type Filter struct {
+	Value    string
+	IsSended bool
+}

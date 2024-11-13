@@ -20,7 +20,7 @@ func TestProductAPIRepository_FindAll(t *testing.T) {
 		Client pkg.Client
 	}
 	type args struct {
-		suplierID string
+		opts model.ProductListOpts
 	}
 	tests := []struct {
 		name    string
@@ -35,7 +35,15 @@ func TestProductAPIRepository_FindAll(t *testing.T) {
 				Client: pkg.NewHTTPClient(os.Getenv("API_KEY"), os.Getenv("API_SECRET")),
 			},
 			args: args{
-				suplierID: os.Getenv("SUPPLIER_ID"),
+				opts: model.ProductListOpts{
+					PaginationOpts: model.PaginationOpts{
+						Size: 10,
+						Page: 0,
+					},
+					SuplierID: model.Filter{
+						Value: os.Getenv("SUPPLIER_ID"),
+					},
+				},
 			},
 			want:    &model.ProductsResponse{},
 			wantErr: false,
@@ -46,7 +54,7 @@ func TestProductAPIRepository_FindAll(t *testing.T) {
 			rc := &repositories.ProductAPIRepository{
 				Client: tt.fields.Client,
 			}
-			got, err := rc.FindAll(tt.args.suplierID)
+			got, err := rc.FindAll(tt.args.opts)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ProductAPIRepository.FindAll() error = %v, wantErr %v", err, tt.wantErr)
 				return

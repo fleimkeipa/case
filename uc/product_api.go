@@ -20,8 +20,8 @@ func NewProductAPIUC(api interfaces.ProductAPIRepository, db ProductDBUC) *Produ
 	}
 }
 
-func (rc *ProductAPIUC) FindAll(ctx context.Context, suplierID string) (*model.ProductsResponse, error) {
-	res, err := rc.api.FindAll(suplierID)
+func (rc *ProductAPIUC) FindAll(ctx context.Context, opts model.ProductListOpts) (*model.ProductsResponse, error) {
+	res, err := rc.api.FindAll(opts)
 	if err != nil {
 		return nil, err
 	}
