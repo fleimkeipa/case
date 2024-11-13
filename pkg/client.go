@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -21,8 +22,16 @@ type Client struct {
 }
 
 func NewHTTPClient(apiKey, apiSecret string) Client {
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true,
+			},
+		},
+	}
+
 	return Client{
-		HTTPClient: &http.Client{},
+		HTTPClient: client,
 		APIKey:     apiKey,
 		APISecret:  apiSecret,
 	}
