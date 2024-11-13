@@ -84,6 +84,10 @@ func TestProductDBUC_Create(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			for _, v := range tt.tempDatas {
+				cacheID := uc.ProductCacheID(v.brandID, v.barcode)
+				addTestCacheData(tt.args.ctx, cacheID, v.barcode)
+			}
 			rc := uc.NewProductDBUC(tt.fields.repo, tt.fields.cache)
 			got, err := rc.Create(tt.args.ctx, tt.args.product)
 			if (err != nil) != tt.wantErr {
