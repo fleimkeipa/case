@@ -19,9 +19,10 @@ func NewProductAPIRepository(client pkg.Client) *ProductAPIRepository {
 
 func (rc *ProductAPIRepository) FindAll(opts model.ProductListOpts) (*model.ProductsResponse, error) {
 	request := model.InternalRequest{
-		Method:  http.MethodGet,
-		Paths:   []string{"suppliers", opts.SuplierID.Value, "products"},
-		Headers: map[string]string{"Content-Type": "application/json"},
+		Method:     http.MethodGet,
+		Paths:      []string{"suppliers", opts.SuplierID.Value, "products"},
+		Headers:    map[string]string{"Content-Type": "application/json"},
+		Pagination: opts.PaginationOpts,
 	}
 
 	var products model.ProductsResponse

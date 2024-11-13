@@ -64,6 +64,8 @@ func (rc *Client) Do(req model.InternalRequest, resp interface{}) error {
 
 	newReq.Header.Add("Authorization", basicAuth(rc.APIKey, rc.APISecret))
 
+	fillQueryParams(req, newReq)
+
 	response, err := rc.HTTPClient.Do(newReq)
 	if err != nil {
 		return err
@@ -104,4 +106,14 @@ func parseURL(req model.InternalRequest) (*url.URL, error) {
 	}
 
 	return parsedURL, nil
+}
+
+func fillQueryParams(req model.InternalRequest, newReq *http.Request) {
+	page := req.Pagination.Page
+	size := req.Pagination.Size
+
+	q := newReq.URL.Query()
+	q.Add("page", fmt.Sprintf("%d", page))
+	q.Add("size", fmt.Sprintf("%d", size))
+	newReq.URL.RawQuery = q.Encode()
 }

@@ -14,11 +14,15 @@ func getPagination(c echo.Context) model.PaginationOpts {
 
 	page, _ := strconv.Atoi(pageQ)
 
-	if page == 0 {
-		page = 30
+	if page <= 0 {
+		page = 1
 	}
 
 	size, _ := strconv.Atoi(sizeQ)
+
+	if size <= 0 {
+		size = 30
+	}
 
 	return model.PaginationOpts{
 		Page: page,
