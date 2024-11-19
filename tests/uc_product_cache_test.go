@@ -27,10 +27,10 @@ func TestProductCacheUC_IsExist(t *testing.T) {
 		barcode string
 	}
 	tests := []struct {
-		name      string
 		fields    fields
-		tempDatas []tempData
 		args      args
+		name      string
+		tempDatas []tempData
 		want      bool
 	}{
 		{

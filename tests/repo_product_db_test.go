@@ -23,10 +23,10 @@ func TestProductDBRepository_Create(t *testing.T) {
 		product *model.Product
 	}
 	tests := []struct {
-		name    string
 		fields  fields
 		args    args
 		want    *model.Product
+		name    string
 		wantErr bool
 	}{
 		{

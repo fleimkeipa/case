@@ -29,10 +29,10 @@ func TestProductAPIUC_FindAll(t *testing.T) {
 		opts model.ProductListOpts
 	}
 	tests := []struct {
-		name    string
 		fields  fields
-		args    args
 		want    *model.ProductsResponse
+		name    string
+		args    args
 		wantErr bool
 	}{
 		{

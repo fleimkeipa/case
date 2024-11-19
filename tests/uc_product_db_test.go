@@ -30,11 +30,11 @@ func TestProductDBUC_Create(t *testing.T) {
 		product *model.Product
 	}
 	tests := []struct {
-		name      string
 		fields    fields
-		tempDatas []tempData
 		args      args
 		want      *model.Product
+		name      string
+		tempDatas []tempData
 		wantErr   bool
 	}{
 		{
