@@ -69,7 +69,7 @@ definitions:
         type: number
       stockCode:
         type: string
-      suplierId:
+      supplierId:
         type: integer
       title:
         type: string

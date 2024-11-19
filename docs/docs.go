@@ -123,7 +123,7 @@ const docTemplate = `{
                 "stockCode": {
                     "type": "string"
                 },
-                "suplierId": {
+                "supplierId": {
                     "type": "integer"
                 },
                 "title": {
