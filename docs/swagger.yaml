@@ -1,0 +1,97 @@
+definitions:
+  controller.FailureResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  controller.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  model.Attribute:
+    properties:
+      attributeId:
+        type: integer
+      attributeValueId:
+        type: integer
+      customAttributeValue:
+        type: string
+    type: object
+  model.DeliveryOption:
+    properties:
+      deliveryDuration:
+        type: integer
+      fastDeliveryType:
+        type: string
+    type: object
+  model.Image:
+    properties:
+      url:
+        type: string
+    type: object
+  model.Product:
+    properties:
+      attributes:
+        items:
+          $ref: '#/definitions/model.Attribute'
+        type: array
+      barcode:
+        type: string
+      brandId:
+        type: integer
+      cargoCompanyId:
+        type: integer
+      categoryId:
+        type: integer
+      currencyType:
+        type: string
+      deliveryOption:
+        $ref: '#/definitions/model.DeliveryOption'
+      description:
+        type: string
+      dimensionalWeight:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/model.Image'
+        type: array
+      listPrice:
+        type: number
+      productMainId:
+        type: string
+      quantity:
+        type: integer
+      salePrice:
+        type: number
+      stockCode:
+        type: string
+      suplierId:
+        type: integer
+      title:
+        type: string
+      vatRate:
+        type: integer
+    type: object
+  model.ProductsResponse:
+    properties:
+      content:
+        items:
+          $ref: '#/definitions/model.Product'
+        type: array
+      page:
+        type: integer
+      size:
+        type: integer
+      totalElements:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths: {}
+swagger: "2.0"

@@ -1,0 +1,150 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {},
+    "definitions": {
+        "controller.FailureResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Attribute": {
+            "type": "object",
+            "properties": {
+                "attributeId": {
+                    "type": "integer"
+                },
+                "attributeValueId": {
+                    "type": "integer"
+                },
+                "customAttributeValue": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.DeliveryOption": {
+            "type": "object",
+            "properties": {
+                "deliveryDuration": {
+                    "type": "integer"
+                },
+                "fastDeliveryType": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Image": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Product": {
+            "type": "object",
+            "properties": {
+                "attributes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Attribute"
+                    }
+                },
+                "barcode": {
+                    "type": "string"
+                },
+                "brandId": {
+                    "type": "integer"
+                },
+                "cargoCompanyId": {
+                    "type": "integer"
+                },
+                "categoryId": {
+                    "type": "integer"
+                },
+                "currencyType": {
+                    "type": "string"
+                },
+                "deliveryOption": {
+                    "$ref": "#/definitions/model.DeliveryOption"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "dimensionalWeight": {
+                    "type": "integer"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Image"
+                    }
+                },
+                "listPrice": {
+                    "type": "number"
+                },
+                "productMainId": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "salePrice": {
+                    "type": "number"
+                },
+                "stockCode": {
+                    "type": "string"
+                },
+                "suplierId": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "vatRate": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.ProductsResponse": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Product"
+                    }
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "totalElements": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
