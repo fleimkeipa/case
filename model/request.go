@@ -1,11 +1,12 @@
 package model
 
 type InternalRequest struct {
-	Pagination PaginationOpts
-	Method     string
-	Paths      []string
-	Headers    map[string]string
-	Body       interface{}
+	Pagination  PaginationOpts
+	Method      string
+	Paths       []string
+	Headers     map[string]string
+	Body        interface{}
+	QueryParams map[string]string
 }
 
 type PaginationOpts struct {
