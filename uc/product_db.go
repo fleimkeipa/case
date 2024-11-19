@@ -2,6 +2,7 @@ package uc
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/fleimkeipa/case/model"
 	"github.com/fleimkeipa/case/repositories/interfaces"
@@ -20,9 +21,15 @@ func NewProductDBUC(repo interfaces.ProductDBRepository, cache *ProductCacheUC) 
 }
 
 func (rc *ProductDBUC) Create(ctx context.Context, product *model.Product) (*model.Product, error) {
-	if rc.cache.IsExist(ctx, product.BrandID, product.Barcode) {
+	if rc.cache.IsExist(ctx, strconv.Itoa(product.SupplierID), product.ProductMainID) {
 		return product, nil
 	}
+
+	go func(ctx context.Context, product *model.Product) {
+		if err := rc.cache.Set(ctx, product); err != nil {
+			return
+		}
+	}(ctx, product)
 
 	return rc.repo.Create(product)
 }

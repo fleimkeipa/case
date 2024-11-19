@@ -9,14 +9,16 @@ import (
 )
 
 type ProductAPIUC struct {
-	api interfaces.ProductAPIRepository
-	db  ProductDBUC
+	api   interfaces.ProductAPIRepository
+	db    ProductDBUC
+	cache ProductCacheUC
 }
 
-func NewProductAPIUC(api interfaces.ProductAPIRepository, db ProductDBUC) *ProductAPIUC {
+func NewProductAPIUC(api interfaces.ProductAPIRepository, db ProductDBUC, cache ProductCacheUC) *ProductAPIUC {
 	return &ProductAPIUC{
-		api: api,
-		db:  db,
+		api:   api,
+		db:    db,
+		cache: cache,
 	}
 }
 
@@ -39,6 +41,27 @@ func (rc *ProductAPIUC) FindAll(ctx context.Context, opts model.ProductListOpts)
 	return res, nil
 }
 
-func (rc *ProductAPIUC) FindOne(id string) (*model.Product, error) {
-	return rc.api.FindOne(id)
+func (rc *ProductAPIUC) FindOne(ctx context.Context, suplierID, productMainID string) (*model.Product, error) {
+	product, err := rc.cache.Get(ctx, suplierID, productMainID)
+	if err != nil {
+		return nil, err
+	}
+
+	if product != nil && product.ProductMainID == productMainID {
+		return product, nil
+	}
+
+	product, err = rc.api.FindOne(suplierID, productMainID)
+	if err != nil {
+		return nil, err
+	}
+
+	go func(ctx context.Context, product *model.Product) {
+		ctx = context.WithoutCancel(ctx)
+		if err := rc.cache.Set(ctx, product); err != nil {
+			return
+		}
+	}(ctx, product)
+
+	return product, nil
 }
