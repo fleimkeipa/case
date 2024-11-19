@@ -3,7 +3,115 @@
     "info": {
         "contact": {}
     },
-    "paths": {},
+    "paths": {
+        "/products": {
+            "get": {
+                "description": "Retrieves a list of products from the supplier API and returns it",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Retrieve a list of products from the supplier API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SuplierID",
+                        "name": "suplier_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of namespaces",
+                        "schema": {
+                            "$ref": "#/definitions/controller.SuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Bad request or error message",
+                        "schema": {
+                            "$ref": "#/definitions/controller.FailureResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "description": "Retrieves a product from the supplier API and returns it",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Retrieve a product by Product Main ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ProductMainID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "SuplierID",
+                        "name": "suplier_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/controller.SuccessResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Product"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.FailureResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
     "definitions": {
         "controller.FailureResponse": {
             "type": "object",
@@ -119,29 +227,6 @@
                     "type": "string"
                 },
                 "vatRate": {
-                    "type": "integer"
-                }
-            }
-        },
-        "model.ProductsResponse": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Product"
-                    }
-                },
-                "page": {
-                    "type": "integer"
-                },
-                "size": {
-                    "type": "integer"
-                },
-                "totalElements": {
-                    "type": "integer"
-                },
-                "totalPages": {
                     "type": "integer"
                 }
             }

@@ -18,16 +18,19 @@ func NewProductController(productUC *uc.ProductAPIUC) *ProductController {
 	return &ProductController{ProductUC: productUC}
 }
 
-// @Summary		Retrieve a list of products from the supplier API
-// @Description	Retrieves a list of products from the supplier API and returns it
-// @Tags			products
-// @Accept			json
-// @Produce		json
-// @Param			suplier_id	path		string	true	"SuplierID"
-// @Param			page		query		int		false	"Page number"
-// @Param			size		query		int		false	"Page size"
-// @Success		200			{object}	SuccessResponse{data=model.ProductsResponse}
-// @Failure		500			{object}	FailureResponse
+// FindAll godoc
+//
+//	@Summary		Retrieve a list of products from the supplier API
+//	@Description	Retrieves a list of products from the supplier API and returns it
+//	@Tags			products
+//	@Accept			json
+//	@Produce		json
+//	@Param			suplier_id	path		string			true	"SuplierID"
+//	@Param			page		query		int				false	"Page number"
+//	@Param			size		query		int				false	"Page size"
+//	@Success		200			{object}	SuccessResponse	"List of namespaces"
+//	@Failure		500			{object}	FailureResponse	"Bad request or error message"
+//	@Router			/products [get]
 func (rc *ProductController) FindAll(c echo.Context) error {
 	opts := rc.getProductsFindOpts(c)
 
@@ -45,15 +48,18 @@ func (rc *ProductController) FindAll(c echo.Context) error {
 	})
 }
 
-// @Summary		Retrieve a product by ID
-// @Description	Retrieves a product from the supplier API and returns it
-// @Tags			products
-// @Accept			json
-// @Produce		json
-// @Param			id			path		string	true	"ProductMainID"
-// @Param			suplier_id	path		string	true	"SuplierID"
-// @Success		200			{object}	SuccessResponse{data=model.Product}
-// @Failure		500			{object}	FailureResponse
+// FindOne godoc
+//
+//	@Summary		Retrieve a product by Product Main ID
+//	@Description	Retrieves a product from the supplier API and returns it
+//	@Tags			products
+//	@Accept			json
+//	@Produce		json
+//	@Param			id			path		string	true	"ProductMainID"
+//	@Param			suplier_id	path		string	true	"SuplierID"
+//	@Success		200			{object}	SuccessResponse{data=model.Product}
+//	@Failure		500			{object}	FailureResponse
+//	@Router			/products/{id} [get]
 func (rc *ProductController) FindOne(c echo.Context) error {
 	productMainID := c.Param("id")
 	suplierID := c.QueryParam("supplier_id")

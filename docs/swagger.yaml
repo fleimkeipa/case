@@ -76,22 +76,76 @@ definitions:
       vatRate:
         type: integer
     type: object
-  model.ProductsResponse:
-    properties:
-      content:
-        items:
-          $ref: '#/definitions/model.Product'
-        type: array
-      page:
-        type: integer
-      size:
-        type: integer
-      totalElements:
-        type: integer
-      totalPages:
-        type: integer
-    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of products from the supplier API and returns
+        it
+      parameters:
+      - description: SuplierID
+        in: path
+        name: suplier_id
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of namespaces
+          schema:
+            $ref: '#/definitions/controller.SuccessResponse'
+        "500":
+          description: Bad request or error message
+          schema:
+            $ref: '#/definitions/controller.FailureResponse'
+      summary: Retrieve a list of products from the supplier API
+      tags:
+      - products
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a product from the supplier API and returns it
+      parameters:
+      - description: ProductMainID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: SuplierID
+        in: path
+        name: suplier_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Product'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.FailureResponse'
+      summary: Retrieve a product by Product Main ID
+      tags:
+      - products
 swagger: "2.0"
