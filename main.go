@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/fleimkeipa/case/controller"
+	_ "github.com/fleimkeipa/case/docs" // which is the generated folder after swag init
 	"github.com/fleimkeipa/case/pkg"
 	"github.com/fleimkeipa/case/repositories"
 	"github.com/fleimkeipa/case/uc"
@@ -14,6 +15,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/redis/go-redis/v9"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"go.uber.org/zap"
 )
 
@@ -56,7 +58,7 @@ func serveApplication() {
 	productDBUC := uc.NewProductDBUC(productDBRepo, productCacheUC)
 
 	productAPIRepo := repositories.NewProductAPIRepository(httpClient)
-	productAPIUC := uc.NewProductAPIUC(productAPIRepo, *productDBUC)
+	productAPIUC := uc.NewProductAPIUC(productAPIRepo, *productDBUC, *productCacheUC)
 
 	productController := controller.NewProductController(productAPIUC)
 
@@ -77,6 +79,9 @@ func loadConfig() {
 func configureEcho(e *echo.Echo) {
 	e.HideBanner = true
 	e.HidePort = true
+
+	// Add Swagger documentation route
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	// Add Recover middleware
 	e.Use(middleware.Recover())
