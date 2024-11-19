@@ -6,6 +6,7 @@ type (
 		Title             string         `json:"title"`
 		ProductMainID     string         `json:"productMainId"`
 		BrandID           int            `json:"brandId"`
+		SupplierID        int            `json:"supplierId"`
 		CategoryID        int            `json:"categoryId"`
 		Quantity          int            `json:"quantity"`
 		StockCode         string         `json:"stockCode"`
