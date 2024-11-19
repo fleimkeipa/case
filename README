@@ -31,7 +31,7 @@ Retrieves a list of products from the supplier API and creates them in the datab
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/case-api.git`
+1. Clone the repository: `git clone https://github.com/fleimkeipa/case-api.git`
 2. Install dependencies: `go get -u ./...`
 3. Create a `.env` file with the following environment variables:
     * `API_KEY`: Your supplier API key
@@ -40,12 +40,51 @@ Retrieves a list of products from the supplier API and creates them in the datab
 
 4. Run the application: `go run main.go`
 
-## Docker
+### 📦 Building and Running the API
 
-To build a Docker image, use the following command:
+####  Using Docker Compose
 
-`docker build -t case-api .`
+1. Clone the repository:
 
-To run the Docker container, use the following command:
+   ```sh
+   git clone https://github.com/fleimkeipa/product.git
+   cd product
+   ```
 
-`docker run -p 8080:8080 case-api`
+2. Copy the example configuration file and modify it if necessary:
+
+   ```sh
+   cp .env-example .env
+   ```
+
+3. Build and run the application using Docker Compose:
+
+   ```sh
+   docker-compose up --build -d
+   ```
+
+The application will now run in a Docker container and be accessible at the configured port!
+
+#### Running Locally
+
+If you prefer to run the application locally without Docker, follow these steps:
+
+1. Install dependencies:
+
+   ```sh
+   go mod download
+   ```
+
+2. Build the application:
+
+   ```sh
+   go build
+   ```
+
+3. Run the application:
+
+   ```sh
+   ./case
+   ```
+
+Now the API should be running and accessible at your configured port!
