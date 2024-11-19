@@ -18,6 +18,16 @@ func NewProductController(productUC *uc.ProductAPIUC) *ProductController {
 	return &ProductController{ProductUC: productUC}
 }
 
+// @Summary		Retrieve a list of products from the supplier API
+// @Description	Retrieves a list of products from the supplier API and returns it
+// @Tags			products
+// @Accept			json
+// @Produce		json
+// @Param			suplier_id	path		string	true	"SuplierID"
+// @Param			page		query		int		false	"Page number"
+// @Param			size		query		int		false	"Page size"
+// @Success		200			{object}	SuccessResponse{data=model.ProductsResponse}
+// @Failure		500			{object}	FailureResponse
 func (rc *ProductController) FindAll(c echo.Context) error {
 	opts := rc.getProductsFindOpts(c)
 
@@ -35,10 +45,20 @@ func (rc *ProductController) FindAll(c echo.Context) error {
 	})
 }
 
+// @Summary		Retrieve a product by ID
+// @Description	Retrieves a product from the supplier API and returns it
+// @Tags			products
+// @Accept			json
+// @Produce		json
+// @Param			id			path		string	true	"ProductMainID"
+// @Param			suplier_id	path		string	true	"SuplierID"
+// @Success		200			{object}	SuccessResponse{data=model.Product}
+// @Failure		500			{object}	FailureResponse
 func (rc *ProductController) FindOne(c echo.Context) error {
-	id := c.Param("id")
+	productMainID := c.Param("id")
+	suplierID := c.QueryParam("supplier_id")
 
-	product, err := rc.ProductUC.FindOne(id)
+	product, err := rc.ProductUC.FindOne(c.Request().Context(), suplierID, productMainID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, FailureResponse{
 			Error:   fmt.Sprintf("Failed to retrieve product: %v", err),
@@ -55,6 +75,6 @@ func (rc *ProductController) FindOne(c echo.Context) error {
 func (rc *ProductController) getProductsFindOpts(c echo.Context) model.ProductListOpts {
 	return model.ProductListOpts{
 		PaginationOpts: getPagination(c),
-		SuplierID:      getFilter(c, "suplier_id"),
+		SuplierID:      getFilter(c, "supplier_id"),
 	}
 }
