@@ -22,7 +22,7 @@ func TestProductDBUC_Create(t *testing.T) {
 		cache *uc.ProductCacheUC
 	}
 	type tempData struct {
-		brandID int
+		brandID string
 		barcode string
 	}
 	type args struct {
@@ -64,7 +64,7 @@ func TestProductDBUC_Create(t *testing.T) {
 			},
 			tempDatas: []tempData{
 				{
-					brandID: 12,
+					brandID: "12",
 					barcode: "1234",
 				},
 			},

@@ -61,8 +61,8 @@ func TestProductAPIUC_FindAll(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			cacheUC := uc.NewProductDBUC(tt.fields.dbRepo, tt.fields.cacheUC)
-			rc := uc.NewProductAPIUC(tt.fields.apiRepo, *cacheUC)
+			productUC := uc.NewProductDBUC(tt.fields.dbRepo, tt.fields.cacheUC)
+			rc := uc.NewProductAPIUC(tt.fields.apiRepo, *productUC, *tt.fields.cacheUC)
 			got, err := rc.FindAll(tt.args.ctx, tt.args.opts)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ProductAPIUC.FindAll() error = %v, wantErr %v", err, tt.wantErr)

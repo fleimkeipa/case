@@ -18,12 +18,12 @@ func TestProductCacheUC_IsExist(t *testing.T) {
 		repo interfaces.CacheRepository
 	}
 	type tempData struct {
-		brandID int
+		brandID string
 		barcode string
 	}
 	type args struct {
 		ctx     context.Context
-		brandID int
+		brandID string
 		barcode string
 	}
 	tests := []struct {
@@ -40,7 +40,7 @@ func TestProductCacheUC_IsExist(t *testing.T) {
 			},
 			args: args{
 				ctx:     context.Background(),
-				brandID: 123,
+				brandID: "123",
 				barcode: "abc",
 			},
 			want: false,
@@ -52,13 +52,13 @@ func TestProductCacheUC_IsExist(t *testing.T) {
 			},
 			tempDatas: []tempData{
 				{
-					brandID: 123,
+					brandID: "123",
 					barcode: "abc",
 				},
 			},
 			args: args{
 				ctx:     context.Background(),
-				brandID: 123,
+				brandID: "123",
 				barcode: "abc",
 			},
 			want: true,
