@@ -2,48 +2,48 @@ package model
 
 type (
 	Product struct {
-		Barcode           string         `json:"barcode"`
+		DeliveryOption    DeliveryOption `json:"deliveryOption"`
+		Description       string         `json:"description"`
 		Title             string         `json:"title"`
 		ProductMainID     string         `json:"productMainId"`
-		BrandID           int            `json:"brandId"`
-		SupplierID        int            `json:"supplierId"`
-		CategoryID        int            `json:"categoryId"`
-		Quantity          int            `json:"quantity"`
-		StockCode         string         `json:"stockCode"`
-		DimensionalWeight int            `json:"dimensionalWeight"`
-		Description       string         `json:"description"`
 		CurrencyType      string         `json:"currencyType"`
+		StockCode         string         `json:"stockCode"`
+		Barcode           string         `json:"barcode"`
+		Attributes        []Attribute    `json:"attributes"`
+		Images            []Image        `json:"images"`
+		DimensionalWeight int            `json:"dimensionalWeight"`
+		Quantity          int            `json:"quantity"`
 		ListPrice         float64        `json:"listPrice"`
 		SalePrice         float64        `json:"salePrice"`
 		VatRate           int            `json:"vatRate"`
 		CargoCompanyID    int            `json:"cargoCompanyId"`
-		DeliveryOption    DeliveryOption `json:"deliveryOption"`
-		Images            []Image        `json:"images"`
-		Attributes        []Attribute    `json:"attributes"`
+		CategoryID        int            `json:"categoryId"`
+		SupplierID        int            `json:"supplierId"`
+		BrandID           int            `json:"brandId"`
 	}
 	DeliveryOption struct {
-		DeliveryDuration int    `json:"deliveryDuration"`
 		FastDeliveryType string `json:"fastDeliveryType"`
+		DeliveryDuration int    `json:"deliveryDuration"`
 	}
 	Image struct {
 		URL string `json:"url"`
 	}
 	Attribute struct {
+		CustomAttributeValue string `json:"customAttributeValue,omitempty"`
 		AttributeID          int    `json:"attributeId"`
 		AttributeValueID     int    `json:"attributeValueId,omitempty"`
-		CustomAttributeValue string `json:"customAttributeValue,omitempty"`
 	}
 )
 
 type ProductsResponse struct {
+	Content       []Product `json:"content"`
 	Page          int       `json:"page"`
 	Size          int       `json:"size"`
 	TotalElements int       `json:"totalElements"`
 	TotalPages    int       `json:"totalPages"`
-	Content       []Product `json:"content"`
 }
 
 type ProductListOpts struct {
-	PaginationOpts PaginationOpts
 	SuplierID      Filter
+	PaginationOpts PaginationOpts
 }
