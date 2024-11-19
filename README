@@ -1,0 +1,51 @@
+
+# Product API
+
+================
+
+## Overview
+
+This is a RESTful API built using Go and the Echo framework. It provides endpoints for managing products and interacting with a supplier API.
+
+## Features
+
+* Retrieves products from a supplier API
+* Creates products in a PostgreSQL database
+* Uses Redis for caching
+* Implements CORS middleware for cross-origin requests
+* Uses Zap for logging
+
+## Endpoints
+
+### GET /products
+
+Retrieves a list of products from the supplier API and creates them in the database.
+
+## Requirements
+
+* Go 1.17+
+* PostgreSQL 13+
+* Redis 6+
+* Echo 4+
+* Zap 1+
+
+## Installation
+
+1. Clone the repository: `git clone https://github.com/your-username/case-api.git`
+2. Install dependencies: `go get -u ./...`
+3. Create a `.env` file with the following environment variables:
+    * `API_KEY`: Your supplier API key
+    * `API_SECRET`: Your supplier API secret
+    * `STAGE`: Choose stage for development or production // dev, prod
+
+4. Run the application: `go run main.go`
+
+## Docker
+
+To build a Docker image, use the following command:
+
+`docker build -t case-api .`
+
+To run the Docker container, use the following command:
+
+`docker run -p 8080:8080 case-api`
