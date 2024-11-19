@@ -7,6 +7,24 @@
 
 This is a RESTful API built using Go and the Echo framework. It provides endpoints for managing products and interacting with a supplier API.
 
+## Explain Endpoints
+
+* `/products`
+  * Retrieve a list of products from the supplier API
+    * If the product is in the cache
+      * Do not create them in the database
+    * If the product is not in the cache
+      * Create them in the cache with 24 hours TTL.
+      * Create them in the database
+
+* `/products/:id`
+  * Retrieve a product by ID from the supplier API
+    * If the product is in the cache
+      * Return the product
+    * If the product is not in the cache
+      * Create them in the cache with 24 hours TTL.
+      * Return the product
+
 ## Features
 
 * Retrieves products from a supplier API
