@@ -25,10 +25,10 @@ func NewProductController(productUC *uc.ProductAPIUC) *ProductController {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			suplier_id	path		string			true	"SuplierID"
+//	@Param			supplier_id	path		string			true	"SupplierID"
 //	@Param			page		query		int				false	"Page number"
 //	@Param			size		query		int				false	"Page size"
-//	@Success		200			{object}	SuccessResponse	"List of namespaces"
+//	@Success		200			{object}	SuccessResponse	"List of products"
 //	@Failure		500			{object}	FailureResponse	"Bad request or error message"
 //	@Router			/products [get]
 func (rc *ProductController) FindAll(c echo.Context) error {
@@ -56,7 +56,7 @@ func (rc *ProductController) FindAll(c echo.Context) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id			path		string	true	"ProductMainID"
-//	@Param			suplier_id	path		string	true	"SuplierID"
+//	@Param			supplier_id	path		string	true	"SupplierID"
 //	@Success		200			{object}	SuccessResponse{data=model.Product}
 //	@Failure		500			{object}	FailureResponse
 //	@Router			/products/{id} [get]

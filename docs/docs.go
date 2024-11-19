@@ -31,8 +31,8 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "SuplierID",
-                        "name": "suplier_id",
+                        "description": "SupplierID",
+                        "name": "supplier_id",
                         "in": "path",
                         "required": true
                     },
@@ -51,7 +51,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of namespaces",
+                        "description": "List of products",
                         "schema": {
                             "$ref": "#/definitions/controller.SuccessResponse"
                         }
@@ -88,8 +88,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "SuplierID",
-                        "name": "suplier_id",
+                        "description": "SupplierID",
+                        "name": "supplier_id",
                         "in": "path",
                         "required": true
                     }

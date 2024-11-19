@@ -86,9 +86,9 @@ paths:
       description: Retrieves a list of products from the supplier API and returns
         it
       parameters:
-      - description: SuplierID
+      - description: SupplierID
         in: path
-        name: suplier_id
+        name: supplier_id
         required: true
         type: string
       - description: Page number
@@ -103,7 +103,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: List of namespaces
+          description: List of products
           schema:
             $ref: '#/definitions/controller.SuccessResponse'
         "500":
@@ -124,9 +124,9 @@ paths:
         name: id
         required: true
         type: string
-      - description: SuplierID
+      - description: SupplierID
         in: path
-        name: suplier_id
+        name: supplier_id
         required: true
         type: string
       produces:
