@@ -109,11 +109,28 @@ func parseURL(req model.InternalRequest) (*url.URL, error) {
 }
 
 func fillQueryParams(req model.InternalRequest, newReq *http.Request) {
+	q := fillPagination(req, newReq)
+
+	for i, v := range req.QueryParams {
+		q.Add(i, v)
+	}
+
+	newReq.URL.RawQuery = q.Encode()
+}
+
+func fillPagination(req model.InternalRequest, newReq *http.Request) url.Values {
 	page := req.Pagination.Page
+	if page < 0 {
+		page = 0
+	}
+
 	size := req.Pagination.Size
+	if size <= 0 {
+		size = 30
+	}
 
 	q := newReq.URL.Query()
 	q.Add("page", fmt.Sprintf("%d", page))
 	q.Add("size", fmt.Sprintf("%d", size))
-	newReq.URL.RawQuery = q.Encode()
+	return q
 }
